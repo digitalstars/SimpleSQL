@@ -1,0 +1,27 @@
+{
+  "name": "digitalstars/simple-sql",
+  "description": "Библиотека для генерации SQL запросов",
+  "license": "MIT",
+  "minimum-stability": "stable",
+  "authors": [
+    {
+      "name": "ZeRoX",
+      "email": "as234zx15@yandex.ru"
+    },
+    {
+      "name": "Runnin",
+      "email": "mr.kirilll12@mail.ru"
+    }
+  ],
+  "require": {
+    "php": ">=8.0",
+    "ext-json": "*",
+    "ext-mbstring": "*",
+    "ext-pdo": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "DigitalStars\\SimpleSQL\\": "src/"
+    }
+  }
+}
