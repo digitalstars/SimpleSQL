@@ -17,7 +17,6 @@ class Select {
     private array $order_by = [];
     private ?int $limit = null;
     private ?string $share_mode = '';
-    private ?string $result_sql = null;
     private Parser $parser;
 
     public function __construct() {
@@ -48,6 +47,7 @@ class Select {
     }
 
     public function setFrom(From $from): self {
+        $this->clearSelectArray();
         $this->from = $from;
         return $this;
     }
