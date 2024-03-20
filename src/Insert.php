@@ -14,6 +14,10 @@ class Insert {
     private ?int $limit = null;
     private Parser $parser;
 
+    private bool $is_ignore_duplicate = false;
+
+    private array $update_fields_on_duplicate = [];
+
     public function __construct() {
         $this->from = From::create();
         $this->parser = Parser::create();
@@ -24,6 +28,32 @@ class Insert {
     }
 
     // Геттеры и сеттеры
+
+    public function setFieldsUpdateOnDuplicate(array $fields = []): self {
+        $this->update_fields_on_duplicate = $fields;
+        return $this;
+    }
+
+    public function addFieldsUpdateOnDuplicate(array|string $fields): self {
+        if (is_array($fields))
+            array_push($this->update_fields_on_duplicate, ...$fields);
+        else
+            $this->update_fields_on_duplicate[] = $fields;
+        return $this;
+    }
+
+    public function getFieldsUpdateOnDuplicate(): array {
+        return $this->update_fields_on_duplicate;
+    }
+
+    public function setIgnoreDuplicate(bool $is_ignore_duplicate = true): self {
+        $this->is_ignore_duplicate = $is_ignore_duplicate;
+        return $this;
+    }
+
+    public function getIgnoreDuplicate(): bool {
+        return $this->is_ignore_duplicate;
+    }
 
     public function setFields(array $sql = []): self {
         $this->insert_fields = [];
@@ -83,13 +113,17 @@ class Insert {
     private function generateResultSQLRaw(): array {
         $where_array = [];
 
+        // Собираем INSERT IGNORE
+        $result_sql = $this->is_ignore_duplicate ? 'IGNORE' : '';
+
         // Собираем TABLE_NAME
         $from = $this->from->getFrom();
         if ($from instanceof Select)
             throw new Exception('Insert not support Select as Table name');
 
         // Собираем FIELDS
-        $fields = implode(', ', array_keys($this->insert_fields));
+        $fields_list = array_keys($this->insert_fields);
+        $fields = implode(', ', $fields_list);
 
         // Собираем VALUES
         if ($this->insert_values instanceof Select) {
@@ -99,7 +133,18 @@ class Insert {
             $where_array[] = $this->insert_values;
         }
 
-        $result_sql = "INSERT INTO $from ($fields) $values";
+        // Собираем ON DUPLICATE KEY UPDATE
+        $on_duplicate = '';
+        if (!empty($this->update_fields_on_duplicate)) {
+            $update_fields = [];
+            $update_fields_correct = array_intersect($fields_list, $this->update_fields_on_duplicate);
+            foreach ($update_fields_correct as $field) {
+                $update_fields[] = "$field = VALUES($field)";
+            }
+            $on_duplicate = " ON DUPLICATE KEY UPDATE " . implode(', ', $update_fields);
+        }
+
+        $result_sql = "INSERT $result_sql INTO $from ($fields) $values $on_duplicate";
 
         return [
             'sql' => $result_sql,
