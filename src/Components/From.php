@@ -52,16 +52,21 @@ class From {
         }
 
         $this->from = $sql;
-        if (empty($this->alias) && !empty($sql)) {
-            $this->alias = $sql[0];
-            if (preg_match_all("/_([^_])/", $sql, $matches))
-                $this->alias .= implode('', $matches[1]);
-        }
 
         return $this;
     }
 
     public function getAlias(): string {
+        if (empty($this->alias) && !empty($this->from)){
+            if ($this->from instanceof Select) {
+                $this->alias = $this->from->getFrom()->getAlias();
+            } else {
+                $this->alias = $this->from[0];
+                if (preg_match_all("/_([^_])/", $this->from, $matches))
+                    $this->alias .= implode('', $matches[1]);
+            }
+        }
+
         return $this->alias;
     }
 

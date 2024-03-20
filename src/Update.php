@@ -82,7 +82,7 @@ class Update {
 
         $this->set[] = [
             'field' => $field,
-            'placeholder' => $placeholder_or_raw_value,
+            'placeholder' => $placeholder_or_raw_value ?: 'NULL',
             'value' => $value
         ];
 
@@ -98,9 +98,12 @@ class Update {
         return $this->from;
     }
 
-    public function setFrom(From $from): self {
+    public function setFrom(string|Select|From $from = null, string $alias = null): self {
         $this->clearSetCache();
-        $this->from = $from;
+        if ($from instanceof From)
+            $this->from = $from;
+        else
+            $this->from = From::create($from, $alias);
         return $this;
     }
 
