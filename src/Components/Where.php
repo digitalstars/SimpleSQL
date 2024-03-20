@@ -3,6 +3,8 @@
 
 namespace DigitalStars\SimpleSQL\Components;
 
+use DigitalStars\SimpleSQL\Exception;
+
 class Where {
 
     private $where_info = [];
