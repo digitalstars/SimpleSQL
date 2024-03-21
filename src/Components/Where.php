@@ -11,17 +11,17 @@ class Where {
 
     /**
      * sqlWhere constructor.
-     * @param null|Where|string $lexema - поле с заполнителем или экземпляр sqlWhere
+     * @param null|Where|string $lexema - поле с заполнителем или экземпляр Where
      * @param null|array|string|int $value - массив параметров
      */
-    public function __construct($lexema = null, $value = null) {
+    public function __construct(Where|string $lexema = null, array|string|int $value = null) {
         if ($lexema instanceof self) {
             $this->where_info[] = $lexema->getSqlRaw();
         } else if (is_string($lexema))
             $this->addWhereString($lexema, $value);
     }
 
-    public static function create($lexema = null, $value = null): self {
+    public static function create(Where|string $lexema = null, array|string|int $value = null): self {
         return new self($lexema, $value);
     }
 

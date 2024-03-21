@@ -79,6 +79,8 @@ class Insert {
     }
 
     public function addValues(array $values = []): self {
+        if ($this->insert_values instanceof Select)
+            $this->insert_values = [];
         $this->insert_values[] = $values;
         return $this;
     }

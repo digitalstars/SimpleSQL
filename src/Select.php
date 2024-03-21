@@ -42,6 +42,14 @@ class Select {
         return $this;
     }
 
+    public function addSelect(string $field, string $alias = null): self {
+        if ($alias)
+            $this->select[$alias] = $field;
+        else
+            $this->select[] = $field;
+        return $this;
+    }
+
     public function getFrom(): From {
         return $this->from;
     }
@@ -121,14 +129,14 @@ class Select {
     }
 
     /** Задаёт порядок сортировки
-     * @param array|null $order - массив полей для сортировки (ключ - поле, значение - направление сортировки (ASC, DESC))
+     * @param array|null $order_by - массив полей для сортировки (ключ - поле, значение - направление сортировки (ASC, DESC))
      * @return $this
      */
-    public function setOrderBy(array $order = null): self {
-        if (is_null($order))
+    public function setOrderBy(array $order_by = null): self {
+        if (is_null($order_by))
             $this->order_by = [];
         else
-            $this->order_by = $order;
+            $this->order_by = $order_by;
         return $this;
     }
 

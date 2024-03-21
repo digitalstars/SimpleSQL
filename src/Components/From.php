@@ -95,7 +95,7 @@ class From {
         }
 
         return [
-            'sql' => "$this->from $this->alias",
+            'sql' => "$this->from " . $this->getAlias(),
             'value' => []
         ];
     }

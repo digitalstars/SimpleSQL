@@ -67,7 +67,7 @@ class Update {
             if (str_starts_with($placeholder, '?'))
                 $value = array_shift($values);
 
-            $this->set[] = [
+            $this->set[$key] = [
                 'field' => $key,
                 'placeholder' => $placeholder ?: 'NULL',
                 'value' => $value
@@ -80,7 +80,7 @@ class Update {
     public function addSet(string $field, string|int|float $placeholder_or_raw_value = null, $value = null): self {
         $this->clearSetCache();
 
-        $this->set[] = [
+        $this->set[$field] = [
             'field' => $field,
             'placeholder' => $placeholder_or_raw_value ?: 'NULL',
             'value' => $value

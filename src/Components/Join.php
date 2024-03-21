@@ -3,6 +3,7 @@
 namespace DigitalStars\SimpleSQL\Components;
 
 use DigitalStars\SimpleSQL\Parser;
+use DigitalStars\SimpleSQL\Select;
 
 class Join {
 
@@ -71,10 +72,11 @@ class Join {
         return $this->type;
     }
 
-    public function setFrom(From|string $from): self {
-        if (is_string($from))
-            $from = From::create($from);
-        $this->from = $from;
+    public function setFrom(string|Select|From $from = null, string $alias = null): self {
+        if ($from instanceof From)
+            $this->from = $from;
+        else
+            $this->from = From::create($from, $alias);
         return $this;
     }
 
