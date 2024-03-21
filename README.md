@@ -23,6 +23,100 @@ $pdo = new \PDO(DB_DSN, DB_LOGIN, DB_PASS);
 Parser::setPDO($pdo);
 ```
 
+## Оглавление
+
+- [Основные компоненты](#Основные-компоненты)
+    - [Parser](#Parser) - Класс для постобработки запроса, заполняет типизированные заполнители значениями.
+        - [setPDO](#setPDO) - Устанавливает объект PDO, который будет использоваться для подготовки параметров запроса.
+    - [From](#From) - Компонент, представляющий таблицу в запросе, к которой идёт обращение.
+        - [create](#create) - Статический метод, инициализация объекта From.
+        - [getFrom](#getFrom) - Возвращает имя таблицы или объект Select.
+        - [setFrom](#setFrom) - Устанавливает имя таблицы или объект Select.
+        - [getAlias](#getAlias) - Возвращает алиас таблицы.
+        - [setAlias](#setAlias) - Устанавливает алиас таблицы.
+        - [getSql](#getSql) - Возвращает сгенерированную строку запроса.
+        - [getSqlRaw](#getSqlRaw) - Возвращает сгенерированную строку запроса и значения для заполнителей.
+    - [Join](#Join) - Компонент, представляющий JOIN-а в запросе.
+        - [create](#create) - Статический метод, инициализация объекта Join.
+        - [getLateral](#getLateral) - Возвращает true, если JOIN является LATERAL.
+        - [setLateral](#setLateral) - Устанавливает JOIN как LATERAL.
+        - [setType](#setType) - Устанавливает тип JOIN-а.
+        - [getType](#getType) - Возвращает тип JOIN-а.
+        - [setFrom](#setFrom) - Устанавливает таблицу для запроса.
+        - [getFrom](#getFrom) - Возвращает объект From, который был установлен в запросе.
+        - [setWhere](#setWhere) - Устанавливает условие соединения JOIN-а.
+        - [getWhere](#getWhere) - Возвращает объект Where (условие JOIN-а).
+        - [getSql](#getSql) - Возвращает сгенерированную строку запроса.
+        - [getSqlRaw](#getSqlRaw) - Возвращает сгенерированную строку запроса и значения для заполнителей.
+    - [Where](#Where) - Компонент, представляющий конструктор условия, может быть использован как для WHERE, так и для ON.
+        - [create](#create) - Статический метод, инициализация объекта Where.
+        - [w_and](#w_and) - Добавляет к текущему объекту Where условие через AND.
+        - [w_or](#w_or) - Добавляет к текущему объекту Where условие через OR.
+        - [clear](#clear) - Очищает текущий объект Where от условий.
+        - [getSqlRaw](#getSqlRaw) - Возвращает сгенерированную строку запроса и значения для заполнителей.
+- [Select](#SELECT-запросы) - Конструктор запросов SELECT.
+    - [create](#create) - Статический метод, инициализация объекта Select.
+    - [setSelect](#setSelect) - Устанавливает список полей для выборки.
+    - [addSelect](#addSelect) - Добавляет поле в список выборки.
+    - [getSelect](#getSelect) - Возвращает список полей для выборки.
+    - [setFrom](#setFrom) - Устанавливает таблицу для запроса.
+    - [getFrom](#getFrom) - Задаёт таблицу для запроса.
+    - [getJoinList](#getJoinList) - Возвращает список объектов Join.
+    - [addJoin](#addJoin) - Добавляет объект Join (или массив объектов), в список JOIN-ов.
+    - [setJoin](#setJoin) - Устанавливает объект Join (или массив объектов), в список JOIN-ов.
+    - [getWhere](#getWhere) - Возвращает условие WHERE.
+    - [setWhere](#setWhere) - Устанавливает условие WHERE.
+    - [getGroupBy](#getGroupBy) - Возвращает список полей для группировки.
+    - [setGroupBy](#setGroupBy) - Устанавливает список полей для группировки.
+    - [getHawing](#getHawing) - Возвращает условие HAVING.
+    - [setHawing](#setHawing) - Устанавливает условие HAVING.
+    - [getOrderBy](#getOrderBy) - Возвращает список полей для сортировки.
+    - [setOrderBy](#setOrderBy) - Устанавливает список полей для сортировки.
+    - [getLimit](#getLimit) - Возвращает количество строк, которые будут выбраны.
+    - [setLimit](#setLimit) - Устанавливает количество строк, которые будут выбраны.
+    - [getShareMode](#getShareMode) - Возвращает режим блокировки.
+    - [setShareModeUpdate](#setShareModeUpdate) - Устанавливает режим FOR UPDATE.
+    - [setShareModeShare](#setShareModeShare) - Устанавливает режим FOR SHARE.
+    - [setShareModeDefault](#setShareModeDefault) - Устанавливает режим блокировки по умолчанию.
+    - [getSelectArray](#getSelectArray) - Собирает и возвращает массив, который содержит в себе все поля выборки.
+    - [getSelectFeels](#getSelectFeels) - Возвращает массив алиасов полей выборки.
+    - [getSql](#getSql) - Возвращает сгенерированную строку запроса.
+    - [getSqlRaw](#getSqlRaw) - Возвращает сгенерированную строку запроса и значения для заполнителей.
+- [INSERT запросы](#INSERT-запросы) - Конструктор запросов INSERT.
+    - [create](#create) - Статический метод, инициализация объекта Insert.
+    - [setFields](#setFields) - Устанавливает список полей для вставки.
+    - [addField](#addField) - Добавляет поле в список полей для вставки.
+    - [getFields](#getFields) - Возвращает список полей для вставки.
+    - [setValues](#setValues) - Устанавливает список значений для вставки.
+    - [addValues](#addValues) - Добавляет значения для вставки.
+    - [getValues](#getValues) - Возвращает список значений для вставки.
+    - [setFrom](#setFrom) - Устанавливает таблицу, в которую будет производиться вставка.
+    - [getFrom](#getFrom) - Возвращает таблицу, в которую будет производиться вставка.
+    - [setIgnoreDuplicate](#setIgnoreDuplicate) - Устанавливает флаг IGNORE в INSERT.
+    - [getIgnoreDuplicate](#getIgnoreDuplicate) - Возвращает true, если установлен флаг IGNORE.
+    - [setFieldsUpdateOnDuplicate](#setFieldsUpdateOnDuplicate) - Устанавливает список полей, которые будут обновлены в случае, если запись уже существует.
+    - [addFieldsUpdateOnDuplicate](#addFieldsUpdateOnDuplicate) - Добавляет поле в список полей, которые будут обновлены в случае, если запись уже существует.
+    - [getFieldsUpdateOnDuplicate](#getFieldsUpdateOnDuplicate) - Возвращает список полей, которые будут обновлены в случае, если запись уже существует.
+    - [getSql](#getSql) - Возвращает сгенерированную строку запроса.
+    - [getSqlRaw](#getSqlRaw) - Возвращает сгенерированную строку запроса и значения для заполнителей.
+- [UPDATE запросы](#UPDATE-запросы) - Конструктор запросов UPDATE.
+    - [create](#create) - Статический метод, инициализация объекта Update.
+    - [setSet](#setSet) - Устанавливает список полей для обновления.
+    - [addSet](#addSet) - Добавляет поле в список полей для обновления.
+    - [getSet](#getSet) - Возвращает список полей для обновления.
+    - [getSetSQLRaw](#getSetSQLRaw) - Возвращает сгенерированную строку запроса (обновляемые поля) и значения для заполнителей.
+    - [getFrom](#getFrom) - Возвращает таблицу, в которой будет производиться обновление.
+    - [setFrom](#setFrom) - Устанавливает таблицу, в которой будет производиться обновление.
+    - [getJoinList](#getJoinList) - Возвращает список объектов Join.
+    - [setJoin](#setJoin) - Устанавливает объект Join (или массив объектов), в список JOIN-ов.
+    - [addJoin](#addJoin) - Добавляет объект Join (или массив объектов), в список JOIN-ов.
+    - [getWhere](#getWhere) - Возвращает условие WHERE.
+    - [setWhere](#setWhere) - Устанавливает условие WHERE.
+    - [getLimit](#getLimit) - Возвращает количество строк, которые будут обновлены.
+    - [setLimit](#setLimit) - Устанавливает количество строк, которые будут обновлены.
+    - [getSql](#getSql) - Возвращает сгенерированную строку запроса.
+    - [getSqlRaw](#getSqlRaw) - Возвращает сгенерированную строку запроса и значения для заполнителей.
+
 ## Основные компоненты
 
 ### Parser
