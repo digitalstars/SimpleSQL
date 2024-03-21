@@ -123,7 +123,7 @@ Parser::setPDO($pdo);
 
 Класс Parser - это постобработка запроса. Он заполняет типизированные заполнители значениями.
 
-#### static function setPDO(\PDO $pdo)
+#### `static function setPDO(\PDO $pdo)`
 
 Метод устанавливает объект PDO, который будет использоваться для подготовки параметров запроса.
 
@@ -134,7 +134,7 @@ Parser::setPDO($pdo);
 Компонент From является обязательным для всех запросов. Он представляет из себя конструктор таблицы в запросе, к
 которой идёт обращение.
 
-#### static create(string|Select $sql = null, string $alias = null): self
+#### `static create(string|Select $sql = null, string $alias = null): self`
 
 Статический метод, инициализация объекта From.
 
@@ -146,27 +146,27 @@ Parser::setPDO($pdo);
 
 Если не указан алиас, то он будет сгенерирован автоматически.
 
-#### getFrom(): string|Select
+#### `getFrom(): string|Select`
 
 Возвращает имя таблицы или объект Select.
 
-#### setFrom(string|Select $sql = null): self
+#### `setFrom(string|Select $sql = null): self`
 
 Устанавливает имя таблицы или объект Select, который будет использован в качестве подзапроса.
 
-#### getAlias(): string
+#### `getAlias(): string`
 
 Возвращает алиас таблицы.
 
-#### setAlias(string $alias): self
+#### `setAlias(string $alias): self`
 
 Устанавливает алиас таблицы.
 
-#### getSql(): string
+#### `getSql(): string`
 
 Возвращает строку запроса, которая была сгенерирована и все заполнители заменены на значения.
 
-#### getSqlRaw(): array
+#### `getSqlRaw(): array`
 
 Метод используется для внутреннего взаимодействия внутри библиотеки. Но может быть полезен для отладки.
 
@@ -179,7 +179,7 @@ Parser::setPDO($pdo);
 
 Компонент Join представляет из себя конструктор JOIN-а в запросе.
 
-#### static create(string $type = null, From|string $from = null, Where|string $where_or_lexema = null, $where_value = null): self
+#### `static create(string $type = null, From|string $from = null, Where|string $where_or_lexema = null, $where_value = null): self`
 
 Статический метод, инициализация объекта Join.
 
@@ -205,23 +205,23 @@ Parser::setPDO($pdo);
 - static function rightLateral(From|string $from, Where|string $where_or_lexema = null, $where_value = null): self - *
   *RIGHT JOIN LATERAL**
 
-#### getLateral(): bool
+#### `getLateral(): bool`
 
 Возвращает true, если JOIN является LATERAL.
 
-#### setLateral(bool $is = true): self
+#### `setLateral(bool $is = true): self`
 
 Устанавливает JOIN как LATERAL.
 
-#### setType(string $type): self
+#### `setType(string $type): self`
 
 Устанавливает тип JOIN-а. Возможные значения: 'INNER', 'LEFT', 'RIGHT'.
 
-#### getType(): string
+#### `getType(): string`
 
 Возвращает тип JOIN-а.
 
-#### setFrom(string|Select|From $from = null, string $alias = null): self
+#### `setFrom(string|Select|From $from = null, string $alias = null): self`
 
 Устанавливает таблицу для запроса.
 
@@ -230,23 +230,23 @@ Parser::setPDO($pdo);
 - $from - имя таблицы (в формате с алиасом или без), объект Select (подзапрос) или объект From (созданный заранее).
 - $alias - алиас таблицы. (не обязательный). Если не указан, то будет сгенерирован автоматически.
 
-#### getFrom(): From
+#### `getFrom(): From`
 
 Возвращает объект From, который был установлен в запросе.
 
-#### setWhere(Where $where): self
+#### `setWhere(Where $where): self`
 
 Устанавливает объект Where для JOIN-а. По сути, это условие ON.
 
-#### getWhere(): Where
+#### `getWhere(): Where`
 
 Возвращает объект Where, который был установлен в запросе.
 
-#### getSql(): string
+#### `getSql(): string`
 
 Возвращает строку запроса, которая была сгенерирована и все заполнители заменены на значения.
 
-#### getSqlRaw(): array
+#### `getSqlRaw(): array`
 
 Метод используется для внутреннего взаимодействия внутри библиотеки. Но может быть полезен для отладки.
 
@@ -262,7 +262,7 @@ Parser::setPDO($pdo);
 > Внимание! Whare активно использует заполнители, и поддерживает все заполнители из digitalstars/DataBase. Подробнее
 > о них можно прочитать в документации к библиотеке [digitalstars/DataBase](https://github.com/digitalstars/DataBase/).
 
-#### static create(Where|string $lexema = null, array|string|int $value = null): self
+#### `static create(Where|string $lexema = null, array|string|int $value = null): self`
 
 Статический метод, инициализация объекта Where.
 
@@ -272,19 +272,19 @@ Parser::setPDO($pdo);
 2) $value - значение для заполнителя в условии. Если нужно передать несколько значений, то передаётся массив. Если нужно
    передать массив в качестве 1 значения (например для IN), то он должен быть обёрнут в массив.
 
-#### w_and($lexema = null, $value = null): self
+#### `w_and($lexema = null, $value = null): self`
 
 Добавляет к текущему объекту Where условие через AND.
 
-#### w_or($lexema = null, $value = null): self
+#### `w_or($lexema = null, $value = null): self`
 
 Добавляет к текущему объекту Where условие через OR.
 
-#### clear(): self
+#### `clear(): self`
 
 Очищает текущий объект Where от условий.
 
-#### getSqlRaw(): ?array
+#### `getSqlRaw(): ?array`
 
 Метод используется для внутреннего взаимодействия внутри библиотеки. Но может быть полезен для отладки.
 
@@ -297,11 +297,11 @@ Parser::setPDO($pdo);
 
 Класс Select представляет из себя конструктор запросов SELECT.
 
-### static create(): self
+### `static create(): self`
 
 Статический метод, инициализация объекта Select.
 
-### setSelect(array $sql)
+### `setSelect(array $sql)`
 
 Устанавливает список полей для выборки. Принимает как массив полей, так и ассоциативный массив, где ключи - это алиасы,
 а значения - это поля таблицы или функции.
@@ -345,7 +345,7 @@ SELECT tn.id       AS tn_id,
 FROM table_name tn
 ```
 
-### addSelect(string $field, string $alias = null): self
+### `addSelect(string $field, string $alias = null): self`
 
 Добавляет поле в список выборки.
 
@@ -374,11 +374,11 @@ SELECT tn.id    AS tn_id,
 FROM table_name tn
 ```
 
-### getSelect(): array
+### `getSelect(): array`
 
 Возвращает список полей для выборки. В том же формате, что и передавался в setSelect.
 
-### setFrom(string|Select|From $from = null, string $alias = null): self
+### `setFrom(string|Select|From $from = null, string $alias = null): self`
 
 Устанавливает таблицу для запроса.
 
@@ -439,19 +439,19 @@ FROM (SELECT tn.id   AS tn_id,
       FROM table_name tn) sub
 ```
 
-### getFrom(): From
+### `getFrom(): From`
 
 Возвращает объект From, который был установлен в запросе.
 
-### getJoinList(): array
+### `getJoinList(): array`
 
 Возвращает список объектов Join, которые были установлены в запросе.
 
-### addJoin(array|Join $join): self
+### `addJoin(array|Join $join): self`
 
 Добавляет объект Join (или массив объектов), в список JOIN-ов.
 
-### setJoin(array|Join $join = null): self
+### `setJoin(array|Join $join = null): self`
 
 Устанавливает объект Join (или массив объектов), в список JOIN-ов.
 
@@ -507,11 +507,11 @@ FROM main_table t
                               LEFT JOIN table_name_three t3 on (tno.id = t3.id)) inf on (inf.tno_id = t.id)
 ```
 
-### getWhere(): Where
+### `getWhere(): Where`
 
 Возвращает объект Where, который был установлен в запросе.
 
-### setWhere(Where $where = null): self
+### `setWhere(Where $where = null): self`
 
 Устанавливает объект Where в запросе.
 
@@ -535,11 +535,11 @@ FROM table_name tn
 WHERE (age > 18 AND name = 'John')
 ```
 
-### getGroupBy(): array
+### `getGroupBy(): array`
 
 Возвращает список полей для группировки.
 
-### setGroupBy(array $group_by = null): self
+### `setGroupBy(array $group_by = null): self`
 
 Устанавливает список полей для группировки. Принимает массив алиасов или полей (как в setSelect).
 
@@ -562,11 +562,11 @@ FROM table_name tn
 GROUP BY tn.name, tn.age
 ```
 
-### getHawing(): Where
+### `getHawing(): Where`
 
 Возвращает объект Where, который был установлен в запросе.
 
-### setHawing(Where $hawing = null): self
+### `setHawing(Where $hawing = null): self`
 
 Устанавливает объект Where в запросе.
 
@@ -592,11 +592,11 @@ GROUP BY tn.name, tn.age
 HAVING (sum_salary > 1000)
 ```
 
-### getOrderBy(): array
+### `getOrderBy(): array`
 
 Возвращает список полей для сортировки в том формате, в котором они были установлены (setOrderBy).
 
-### setOrderBy(array $order_by = null): self
+### `setOrderBy(array $order_by = null): self`
 
 Устанавливает список полей для сортировки. Ключ - это поле (как в методе setGroupBy), значение - это направление сортировки.
 
@@ -621,45 +621,45 @@ GROUP BY tn.name, tn.age
 ORDER BY tn.name ASC, tn.age DESC
 ```
 
-### getLimit(): ?int
+### `getLimit(): ?int`
 
 Возвращает количество строк, которые будут выбраны. В случае, если не установлено, то возвращает null.
 
-### setLimit(?int $limit = null): self
+### `setLimit(?int $limit = null): self`
 
 Устанавливает количество строк, которые будут выбраны.
 
-### getShareMode(): ?string
+### `getShareMode(): ?string`
 
 Возвращает режим блокировки. В случае, если не установлено, то возвращает null.
 
-### setShareModeUpdate(): self
+### `setShareModeUpdate(): self`
 
 Устанавливает режим FOR UPDATE.
 
-### setShareModeShare(): self
+### `setShareModeShare(): self`
 
 Устанавливает режим FOR SHARE.
 
-### setShareModeDefault(): self
+### `setShareModeDefault(): self`
 
 Устанавливает режим блокировки по умолчанию.
 
-### getSelectArray(): array
+### `getSelectArray(): array`
 
 Собирает и возвращает массив, который содержит в себе все поля выборки в формате, который используется в запросе.
 
 Ключ - это алиас поля, значение - это поле или выражение.
 
-### getSelectFeels(): array
+### `getSelectFeels(): array`
 
 Возвращает массив алиасов полей выборки.
 
-### getSql(): string
+### `getSql(): string`
 
 Возвращает строку запроса, которая была сгенерирована и все заполнители заменены на значения.
 
-### getSqlRaw(): array
+### `getSqlRaw(): array`
 
 Метод используется для внутреннего взаимодействия внутри библиотеки. Но может быть полезен для отладки.
 
@@ -672,15 +672,15 @@ ORDER BY tn.name ASC, tn.age DESC
 
 Класс Insert представляет из себя конструктор запросов INSERT.
 
-### static create(): self
+### `static create(): self`
 
 Статический метод, инициализация объекта Insert.
 
-### setFields(array $sql = []): self
+### `setFields(array $sql = []): self`
 
 Устанавливает список полей для вставки. Принимает ассоциативный массив, где ключи - это поля, а значения - это заполнитель (или значение для вставки).
 
-### addField(string $field, string|int|float $placeholder_or_raw_value = null): self
+### `addField(string $field, string|int|float $placeholder_or_raw_value = null): self`
 
 Добавляет поле в список полей для вставки.
 
@@ -689,57 +689,57 @@ ORDER BY tn.name ASC, tn.age DESC
 - $field - имя поля.
 - $placeholder_or_raw_value - заполнитель (или значение для вставки).
 
-### getFields(): array
+### `getFields(): array`
 
 Возвращает список полей для вставки. (в том же формате, в котором они были установлены методом setFields).
 
-### setValues(array|Select $values = []): self
+### `setValues(array|Select $values = []): self`
 
 Устанавливает список значений для вставки. Принимает массив значений или объект Select (если нужно вставить значения как из результата выполнения Select запроса).
 
 > **Внимание!** Каждый элемент массива - это массив значений всех полей, под каждый заполнитель
 
-### addValues(array $values = []): self
+### `addValues(array $values = []): self`
 
 Добавляет значения для вставки.
 
-### getValues(): array|Select
+### `getValues(): array|Select`
 
 Возвращает список значений для вставки (или объект Select). В том же формате, в котором они были установлены методом setValues.
 
-### setFrom(string|Select|From $from = null, string $alias = null): self
+### `setFrom(string|Select|From $from = null, string $alias = null): self`
 
 Устанавливает таблицу, в которую будет производиться вставка.
 
-### getFrom(): From
+### `getFrom(): From`
 
 Возвращает объект From, который был установлен в запросе.
 
-### setIgnoreDuplicate(bool $is_ignore_duplicate = true): self
+### `setIgnoreDuplicate(bool $is_ignore_duplicate = true): self`
 
 Устанавливает флаг IGNORE в INSERT.
 
-### getIgnoreDuplicate(): bool
+### `getIgnoreDuplicate(): bool`
 
 Возвращает true, если установлен флаг IGNORE.
 
-### setFieldsUpdateOnDuplicate(array $fields = []): self
+### `setFieldsUpdateOnDuplicate(array $fields = []): self`
 
 Устанавливает список полей, которые будут обновлены в случае, если запись уже существует.
 
-### addFieldsUpdateOnDuplicate(array|string $fields): self
+### `addFieldsUpdateOnDuplicate(array|string $fields): self`
 
 Добавляет поле в список полей, которые будут обновлены в случае, если запись уже существует.
 
-### getFieldsUpdateOnDuplicate(): array
+### `getFieldsUpdateOnDuplicate(): array`
 
 Возвращает список полей, которые будут обновлены в случае, если запись уже существует.
 
-### getSql(): string
+### `getSql(): string`
 
 Возвращает строку запроса, которая была сгенерирована и все заполнители заменены на значения.
 
-### getSqlRaw(): array
+### `getSqlRaw(): array`
 
 Метод используется для внутреннего взаимодействия внутри библиотеки. Но может быть полезен для отладки.
 
@@ -805,11 +805,11 @@ FROM table_name_2 tn2
 
 Класс Update представляет из себя конструктор запросов UPDATE.
 
-### static create(): self
+### `static create(): self`
 
 Статический метод, инициализация объекта Update.
 
-### setSet(array $sql = [], array $values = []): self
+### `setSet(array $sql = [], array $values = []): self`
 
 Устанавливает список полей и их значений для обновления.
 
@@ -818,7 +818,7 @@ FROM table_name_2 tn2
 - $sql - ассоциативный массив, где ключи - это поля, а значения - это заполнитель (или значение для вставки без валидации).
 - $values - массив значений, которые будут подставлены под заполнители
 
-### addSet(string $field, string|int|float $placeholder_or_raw_value = null, $value = null): self
+### `addSet(string $field, string|int|float $placeholder_or_raw_value = null, $value = null): self`
 
 Добавляет поле и его значение для обновления.
 
@@ -828,7 +828,7 @@ FROM table_name_2 tn2
 - $placeholder_or_raw_value - заполнитель (или значение для вставки без валидации).
 - $value - значение для заполнителя.
 
-### getSet(): array
+### `getSet(): array`
 
 Возвращает список полей и их значений для обновления.
 
@@ -838,7 +838,7 @@ FROM table_name_2 tn2
 - `placeholder` - заполнитель (или значение для вставки без валидации).
 - `value` - значение для заполнителя.
 
-### getSetSQLRaw(): array
+### `getSetSQLRaw(): array`
 
 Возвращает данные, которые были установлены для обновления. Используется для внутреннего взаимодействия внутри библиотеки. Но может быть полезен для отладки.
 
@@ -847,47 +847,47 @@ FROM table_name_2 tn2
 1) 'sql' => SQL запрос, который был сгенерирован, но заполнители не были заменены на значения.
 2) 'values' => массив значений для заполнителей.
 
-### getFrom(): From
+### `getFrom(): From`
 
 Возвращает объект From, который был установлен в запросе.
 
-### setFrom(string|Select|From $from = null, string $alias = null): self
+### `setFrom(string|Select|From $from = null, string $alias = null): self`
 
 Устанавливает таблицу, в которой будет производиться обновление.
 
-### getJoinList(): array
+### `getJoinList(): array`
 
 Возвращает список объектов Join, которые были установлены в запросе. (По аналоии с Select)
 
-### setJoin(array|Join $join = null): self
+### `setJoin(array|Join $join = null): self`
 
 Устанавливает объект Join (или массив объектов), в список JOIN-ов. (По аналоии с Select)
 
-### addJoin(array|Join $join): self
+### `addJoin(array|Join $join): self`
 
 Добавляет объект Join (или массив объектов), в список JOIN-ов. (По аналоии с Select)
 
-### getWhere(): Where
+### `getWhere(): Where`
 
 Возвращает объект Where, который был установлен в запросе. Отвечает за условие WHERE.
 
-### setWhere(Where $where = null): self
+### `setWhere(Where $where = null): self`
 
 Устанавливает объект Where в запросе. Отвечает за условие WHERE.
 
-### getLimit(): ?int
+### `getLimit(): ?int`
 
 Возвращает количество строк, которые будут обновлены. В случае, если не установлено, то возвращает null.
 
-### setLimit(?int $limit = null): self
+### `setLimit(?int $limit = null): self`
 
 Устанавливает количество строк, которые будут обновлены.
 
-### getSql(): string
+### `getSql(): string`
 
 Возвращает строку запроса, которая была сгенерирована и все заполнители заменены на значения.
 
-### getSqlRaw(): array
+### `getSqlRaw(): array`
 
 Метод используется для внутреннего взаимодействия внутри библиотеки. Но может быть полезен для отладки.
 
