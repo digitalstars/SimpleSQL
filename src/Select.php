@@ -42,6 +42,11 @@ class Select {
         return $this;
     }
 
+    public function addSelectList(array $sql): self {
+        $this->select += $sql;
+        return $this;
+    }
+
     public function addSelect(string $field, string $alias = null): self {
         if ($alias)
             $this->select[$alias] = $field;
