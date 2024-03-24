@@ -80,7 +80,7 @@ class From {
             return '';
         if ($this->from instanceof Select)
             return "({$this->from->getSql()}) $this->alias";
-        return "$this->from $this->alias";
+        return "`$this->from` $this->alias";
     }
 
     public function getSqlRaw(): array {
@@ -95,7 +95,7 @@ class From {
         }
 
         return [
-            'sql' => "$this->from " . $this->getAlias(),
+            'sql' => "`$this->from` " . $this->getAlias(),
             'value' => []
         ];
     }

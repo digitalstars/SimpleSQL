@@ -119,7 +119,7 @@ class Insert {
         $result_sql = $this->is_ignore_duplicate ? 'IGNORE' : '';
 
         // Собираем TABLE_NAME
-        $from = $this->from->getFrom();
+        $from = '`' . $this->from->getFrom() . '`';
         if ($from instanceof Select)
             throw new Exception('Insert not support Select as Table name');
 
