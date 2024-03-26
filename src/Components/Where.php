@@ -51,15 +51,15 @@ class Where {
         return $result_value;
     }
 
-    public function w_and($lexema = null, $value = null): self {
+    public function w_and(Where|string $lexema = null, $value = null): self {
         return $this->addWhereLexema($lexema, $value, 'AND');
     }
 
-    public function w_or($lexema = null, $value = null): self {
+    public function w_or(Where|string $lexema = null, $value = null): self {
         return $this->addWhereLexema($lexema, $value, 'OR');
     }
 
-    private function addWhereLexema($lexema = null, $value = null, $separator = null): self {
+    private function addWhereLexema(Where|string $lexema = null, $value = null, $separator = null): self {
         if (!empty($this->where_info) && $separator)
             $this->where_info[] = [
                 'type' => 2, // SEPARATOR
