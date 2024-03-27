@@ -11,7 +11,6 @@ class Insert {
     private array $insert_fields = [];
     private array|Select $insert_values = [];
     private From $from;
-    private ?int $limit = null;
     private Parser $parser;
 
     private bool $is_ignore_duplicate = false;
