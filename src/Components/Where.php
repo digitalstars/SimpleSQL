@@ -25,6 +25,10 @@ class Where {
         return new self($lexema, $value);
     }
 
+    public function isEmpty(): bool {
+        return empty($this->where_info);
+    }
+
     public function getSqlRaw(): ?array {
         if (empty($this->where_info))
             return null;
