@@ -145,6 +145,11 @@ class Select {
         return $this;
     }
 
+    public function addOrderBy(array $order_by): self {
+        $this->order_by += $order_by;
+        return $this;
+    }
+
     public function getLimit(): ?int {
         return $this->limit;
     }
